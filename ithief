@@ -1,0 +1,28 @@
+#!/bin/bash
+#===============================================================================
+#
+#         FILE:  ithief
+#
+#  DESCRIPTION:  This script is part of iThief, a terminal interface for iTunes.
+#
+#        NOTES:  Place this script somewhere in you $PATH. It depends on the 
+#                AppleScript iThief.scpt.
+#       AUTHOR:  Israel Chauca (israel@chauca.net)
+#      VERSION:  1.2.1
+#         SITE:  http://launchpad.net/ithief
+#===============================================================================
+asname="iThief.scpt"
+aspath="~/Library/iTunes/Scripts/"
+if [ -e ~/Library/iTunes/Scripts/iThief.scpt ]
+then
+    result=`/usr/bin/osascript  ~/Library/iTunes/Scripts/iThief.scpt $*`
+    if [ "$result" == "help" ]
+    then
+        $0 help2 | tr "\r" "\n" | less -e -P "iThief help (Q to exit)"
+    else
+        echo $result | tr "\r" "\n"
+    fi
+else
+    echo "I couldn't find \"$asname\" at \"$aspath\"."
+    echo "Either you find \"$asname\" and move it there or modify this script at \"$0\" and put the correct path to \"$asname\"."
+fi
